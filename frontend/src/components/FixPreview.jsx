@@ -25,7 +25,7 @@ export default function FixPreview({ asset, rules, onChange }) {
   if (!fix) {
     return (
       <div className="fix">
-        <h3>Auto-fix</h3>
+        <h3>Fix</h3>
         <p className="muted">Preview is not available until the brand rules have loaded.</p>
       </div>
     )
@@ -45,14 +45,14 @@ export default function FixPreview({ asset, rules, onChange }) {
 
   return (
     <div className="fix">
-      <h3>Auto-fix available</h3>
+      <h3>Fix available</h3>
       <p className="muted">{fix.steps.join(', ')}.</p>
       <div className="ba">
         <figure><img src={asset.originalUrl} alt="Original" /><figcaption>Original</figcaption></figure>
         <figure><img src={fix.url} alt="Preview after fix" /><figcaption>After fix</figcaption></figure>
       </div>
       {error && <p className="error">{error}</p>}
-      <button type="button" className="btn" disabled={busy} onClick={apply}>
+      <button type="button" className="btn btn-primary" disabled={busy} onClick={apply}>
         {busy ? 'Applying…' : 'Apply fix'}
       </button>
     </div>

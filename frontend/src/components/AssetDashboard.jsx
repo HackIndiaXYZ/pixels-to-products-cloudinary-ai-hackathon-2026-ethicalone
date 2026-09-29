@@ -4,8 +4,8 @@ import { computeTrust } from '../lib/trustScore'
 
 const TABS = [
   ['all', 'All'],
-  ['publish', 'Ready'],
-  ['review', 'Needs review'],
+  ['publish', 'Allowed'],
+  ['review', 'Review'],
   ['reject', 'Blocked'],
 ]
 
@@ -43,7 +43,7 @@ export default function AssetDashboard({ assets, loading, onOpen, onRefresh }) {
       ) : visible.length === 0 ? (
         <p className="empty">
           {assets.length === 0
-            ? 'No assets yet. Use Upload assets on the left to run the first check.'
+            ? 'No assets yet. Use Upload assets on the left to run the first scan.'
             : 'Nothing in this view yet.'}
         </p>
       ) : (

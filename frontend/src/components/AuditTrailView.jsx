@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react'
 import { api } from '../api/assets'
 
 const ACTION_LABEL = {
-  uploaded: 'Uploaded',
-  checked: 'Checks run',
-  rechecked: 'Checked again',
-  fixed: 'Fix applied',
-  approved: 'Approved',
-  rejected: 'Rejected',
+  uploaded: 'Submitted',
+  checked: 'Scanned',
+  rechecked: 'Re-scanned',
+  fixed: 'Fixed',
+  approved: 'Allowed',
+  rejected: 'Blocked',
 }
 
 export default function AuditTrailView({ assetId, refreshKey }) {
@@ -24,8 +24,8 @@ export default function AuditTrailView({ assetId, refreshKey }) {
     }
   }, [assetId, refreshKey])
 
-  if (!logs) return <p className="muted">Loading history…</p>
-  if (logs.length === 0) return <p className="muted">No history recorded yet.</p>
+  if (!logs) return <p className="muted">Loading log…</p>
+  if (logs.length === 0) return <p className="muted">No entries yet.</p>
 
   const sorted = [...logs].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
   return (

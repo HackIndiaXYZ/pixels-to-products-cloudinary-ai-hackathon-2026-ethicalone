@@ -9,10 +9,10 @@ export const LABELS = {
 }
 
 export const VERDICT = {
-  publish: { label: 'Ready to publish' },
-  review: { label: 'Needs review' },
+  publish: { label: 'Allowed' },
+  review: { label: 'Review' },
   reject: { label: 'Blocked' },
-  checking: { label: 'Checking' },
+  checking: { label: 'Scanning' },
 }
 
 // The backend's /fix route saves a corrected URL but does not re-run the checks.

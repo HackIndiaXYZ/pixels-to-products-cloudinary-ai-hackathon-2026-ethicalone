@@ -42,8 +42,9 @@ export default function AssetDetail({ asset, rules, onClose, onChange }) {
   }
 
   const name = asset.cloudinaryPublicId?.split('/').pop() || 'Untitled'
+  const caseId = (asset._id || '').slice(-6) || '—'
   const mod = checks.moderation
-  const cannotApprove = !mod?.passed
+  const cannotAllow = !mod?.passed
   const modWaiting = mod?.status === 'pending' || mod?.status === 'unavailable'
 
   return (
@@ -51,20 +52,21 @@ export default function AssetDetail({ asset, rules, onClose, onChange }) {
       <div className="scrim" onClick={onClose} />
       <aside className="drawer" role="dialog" aria-label={`Details for ${name}`}>
         <div className="drawer-top">
+          <span className="case-id">#{caseId}</span>
           <button type="button" className="btn btn-quiet" onClick={onClose}>Close</button>
         </div>
 
         <img className="hero-img" src={asset.fixedUrl || asset.originalUrl} alt="" />
 
         <div className="verdict">
-          <TrustRing score={score} verdict={verdict} size={84} />
+          <TrustRing score={score} verdict={verdict} size={72} />
           <div>
             <h2>{name}</h2>
             <span className={`chip chip-${verdict}`}>{VERDICT[verdict].label}</span>
           </div>
         </div>
 
-        <h3>Checks</h3>
+        <h3>Scan results</h3>
         <ul className="checks">
           {Object.entries(LABELS).map(([key, label]) => {
             const c = checks[key]
@@ -94,38 +96,38 @@ export default function AssetDetail({ asset, rules, onClose, onChange }) {
 
         <FixPreview asset={asset} rules={rules} onChange={onChange} />
 
-        <h3>Your decision</h3>
+        <h3>Decision</h3>
         {asset.decision !== 'pending' && (
           <p className="muted">
-            Marked {asset.decision}
+            Marked {asset.decision === 'approved' ? 'allowed' : 'blocked'}
             {asset.decisionNote ? `: ${asset.decisionNote}` : '.'}
           </p>
         )}
         <label className="field">
-          <span>Note for the audit log</span>
+          <span>Note for the log</span>
           <textarea rows={2} value={note} onChange={(e) => setNote(e.target.value)} placeholder="Why are you making this call?" />
         </label>
-        {cannotApprove && (
+        {cannotAllow && (
           <p className="muted">
             {modWaiting
-              ? 'Approval is locked until moderation finishes. Run the checks again in a moment.'
-              : 'Approval is disabled because the safety check failed.'}
+              ? 'Allowing is locked until the safety scan finishes. Try again in a moment.'
+              : 'Allowing is disabled because the safety check failed.'}
           </p>
         )}
         {error && <p className="error">{error}</p>}
         <div className="actions">
-          <button type="button" className="btn" disabled={busy || cannotApprove} onClick={() => run(() => api.decide(asset._id, 'approved', note))}>
-            Approve
+          <button type="button" className="btn btn-primary" disabled={busy || cannotAllow} onClick={() => run(() => api.decide(asset._id, 'approved', note))}>
+            Allow
           </button>
           <button type="button" className="btn btn-danger" disabled={busy} onClick={() => run(() => api.decide(asset._id, 'rejected', note))}>
-            Reject
+            Block
           </button>
           <button type="button" className="btn btn-quiet" disabled={busy} onClick={() => run(() => api.recheck(asset._id))}>
-            Run checks again
+            Scan again
           </button>
         </div>
 
-        <h3>History</h3>
+        <h3>Activity log</h3>
         <AuditTrailView assetId={asset._id} refreshKey={auditKey} />
       </aside>
     </>
