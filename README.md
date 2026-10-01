@@ -149,7 +149,35 @@ Open `http://localhost:5173`. Setting `VITE_USE_MOCK=true` runs the full UI on
 built-in demo data with no backend or Cloudinary keys required — useful for a quick
 look without any setup.
 
-## Team
+## Live demo
+
+- App: _add the deployed frontend link here_
+- API: _add the deployed backend link here_
+- Video walkthrough: _add the demo video link here_
+
+## Known limitations
+
+- Only one active brand rule set at a time; there's no in-app way to create or switch
+  between rule sets yet (it's seeded via a single API call, see Setup above).
+- No authentication — anyone with the link can review and decide on assets. Fine for
+  a hackathon demo, not meant for production use as-is.
+- Moderation confidence scores from Cloudinary aren't surfaced in the UI yet, only the
+  pass/fail result and the flagged category.
+
+## What's next
+
+- **Rule editor UI** — create and switch between brand rule sets from the app instead
+  of a one-time API call.
+- **Brand-topic matching** — use Cloudinary's auto-tagging to flag content that's
+  off-topic for the brand (e.g. a food photo uploaded for a fashion account), not just
+  unsafe or off-spec.
+- **Analytics panel** — pass rate, average trust score, and the most common failure
+  reasons across all reviewed assets.
+- **Bulk review** — select and clear or deny multiple "on hold" assets at once.
+- **Exportable audit report** — download the case history as a CSV/PDF for compliance
+  records.
+
+## Team — EthicalOne
 
 - Sarthak Hire — backend (data models, Cloudinary service, rule engine, API routes)
 - Adarsh — frontend (dashboard, trust score, review flow, audit trail, design)
